@@ -1,25 +1,52 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
+document.addEventListener("DOMContentLoaded", function () {
+  const taskList = document.getElementById("task-list");
+  const taskInput = document.getElementById("task-input");
+  const addButton = document.getElementById("add-button");
+
+  addButton.addEventListener("click", function () {
+      const taskText = taskInput.value.trim();
+
+      if (taskText !== "") {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
+              <input type="checkbox">
+              <span>${taskText}</span>
+              <button class="delete-button">Dzēst</button>
+          `;
+
+          taskList.appendChild(listItem);
+          taskInput.value = "";
+
+          const deleteButton = listItem.querySelector(".delete-button");
+          deleteButton.addEventListener("click", function () {
+              listItem.remove();
+          });
+
+          const checkbox = listItem.querySelector("input[type='checkbox']");
+          checkbox.addEventListener("change", function () {
+              const taskSpan = listItem.querySelector("span");
+              if (checkbox.checked) {
+                  taskSpan.style.textDecoration = "line-through";
+              } else {
+                  taskSpan.style.textDecoration = "none";
+              }
+          });
+      }
+  });
+});
+
+
+
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    </>
   );
 }
 
-export default App;
+
